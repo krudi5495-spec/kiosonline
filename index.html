@@ -344,8 +344,8 @@
 
     <!-- SCRIPT APLIKASI -->
     <script>
-        // URL Google Sheets Web App Anda
-        const SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx27QtjSi4h0t3cfpdKnmCURwUI4jkJpLQZDYs1Ua2gSCC_DJWZneUaD8QM7WhUFk8DHQ/exec';
+        // URL Google Sheets Web App Terbaru
+        const SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbylei50vv5gmjYRGXrl0hotQ4DMVx8apUqjARuiZ8QQhvT_2JvFXe09cKFJcxKo3wnz2Q/exec';
 
         function kiosOnlineApp() {
             return {
@@ -373,12 +373,11 @@
                 async handleRegister() {
                     if (!this.registerUsername || !this.registerEmail || !this.registerPassword) { alert('Lengkapi data!'); return; }
                     
-                    // Kirim data pendaftaran ke Google Sheets secara otomatis
+                    // Kirim data pendaftaran ke Google Sheets menggunakan format text/plain agar tidak terhalang CORS
                     try {
                         await fetch(SHEET_WEB_APP_URL, {
                             method: 'POST',
-                            mode: 'no-cors',
-                            headers: { 'Content-Type': 'application/json' },
+                            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                             body: JSON.stringify({
                                 username: this.registerUsername,
                                 email: this.registerEmail,
