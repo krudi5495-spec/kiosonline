@@ -412,7 +412,6 @@
                 async handleLogin() {
                     if (!this.loginEmail || !this.loginPassword) { alert('Masukkan email & password!'); return; }
                     
-                    // Ambil data terbaru dari server saat login untuk validasi password & saldo
                     try {
                         const response = await fetch(SHEET_WEB_APP_URL + '?email=' + encodeURIComponent(this.loginEmail));
                         const data = await response.json();
