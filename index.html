@@ -144,6 +144,7 @@
                 </div>
             </div>
 
+            <!-- 6 PRODUK TERLARIS UTAMA -->
             <div class="mb-8">
                 <div class="flex items-center space-x-2.5 mb-4">
                     <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-lg shadow-orange-500/30">
@@ -156,8 +157,8 @@
                     <template x-for="item in [
                         products.find(p => p.id === 'chatgpt'),
                         products.find(p => p.id === 'claude'),
-                        products.find(p => p.id === 'capcut'),
-                        products.find(p => p.id === 'disney'),
+                        products.find(p => p.id === 'museai'),
+                        products.find(p => p.id === 'gemini'),
                         products.find(p => p.id === 'canva'),
                         products.find(p => p.id === 'youtube')
                     ].filter(Boolean)" :key="'pop-'+item.id">
@@ -191,7 +192,7 @@
                 </h3>
                 <div class="relative w-full md:w-80">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400"><i class="fa-solid fa-magnifying-glass text-xs"></i></span>
-                    <input type="text" x-model="searchQuery" @input="triggerLoading()" placeholder="Cari CapCut, Disney+, Canva..." class="glass-card w-full rounded-2xl pl-10 pr-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-indigo-500 text-slate-200 shadow-inner border border-slate-800">
+                    <input type="text" x-model="searchQuery" @input="triggerLoading()" placeholder="Cari layanan AI, Muse AI, Canva..." class="glass-card w-full rounded-2xl pl-10 pr-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-indigo-500 text-slate-200 shadow-inner border border-slate-800">
                 </div>
             </div>
 
@@ -230,7 +231,7 @@
                 <span class="inline-block bg-indigo-500/20 text-indigo-400 border border-indigo-500/40 px-3.5 py-1 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-widest mb-3">Gabung Program Kemitraan</span>
                 <h2 class="text-xl sm:text-3xl md:text-4xl font-black text-white mb-3 tracking-tight">Jadi Reseller Akun AI & Premium Resmi Bersama www.kiosonline.shop</h2>
                 <p class="text-xs sm:text-sm md:text-base text-slate-300 max-w-2xl mx-auto mb-6 font-light leading-relaxed">
-                    Dapatkan harga termurah tangan pertama untuk seluruh produk AI Pro, CapCut Pro, Disney+, serta aplikasi hiburan premium.
+                    Dapatkan harga termurah tangan pertama untuk seluruh produk AI Pro (ChatGPT, Claude, Muse AI, Gemini) serta aplikasi hiburan premium.
                 </p>
                 <a href="https://wa.me/6289502366403?text=Halo%20Admin%2C%20saya%20tertarik%20ingin%20bergabung%20menjadi%20Reseller%20di%20www.kiosonline.shop." target="_blank" class="inline-flex items-center gap-2.5 bg-gradient-to-r from-indigo-600 to-cyan-500 hover:scale-105 text-white font-bold px-6 sm:px-8 py-3.5 rounded-2xl shadow-xl shadow-indigo-600/40 transition text-xs sm:text-sm">
                     <i class="fa-brands fa-whatsapp text-base sm:text-lg"></i> Daftar Reseller via WhatsApp
@@ -243,9 +244,11 @@
             <h2 class="text-lg sm:text-xl font-black mb-1.5 flex items-center space-x-2 text-white"><i class="fa-solid fa-trophy text-yellow-400"></i><span>Top Reseller & Buyer Bulanan</span></h2>
             <div class="space-y-3 max-h-[500px] overflow-y-auto pr-1 text-xs text-slate-300 mt-4">
                 <div class="glass-card p-3.5 rounded-2xl border border-slate-800 flex justify-between items-center">
-                    <div class="flex items-center gap-2.5"><span class="w-6 h-6 rounded-lg bg-yellow-500/20 text-yellow-400 font-bold flex items-center justify-center text-xs">1</span><span class="font-bold text-white">rudi****@gmail.com</span></div>
+                    <div class="flex items-center gap-2.5"><span class="w-6 h-6 rounded-lg bg-yellow-500/20 text-yellow-400 font-bold flex items-center justify-center text-xs">1</span><span class="font-bold text-white">SURY****@gmail.com</span></div>
                     <span class="font-extrabold text-emerald-400 text-xs">Rp 4.500.000</span>
-                </div>
+                    <div class="flex items-center gap-2.5"><span class="w-6 h-6 rounded-lg bg-yellow-500/20 text-yellow-400 font-bold flex items-center justify-center text-xs">1</span><span class="font-bold text-white">alt****@gmail.com</span></div>
+                    <span class="font-extrabold text-emerald-400 text-xs">Rp 3.200.000</span> 
+                </div> 
             </div>
         </div>
 
@@ -279,14 +282,35 @@
                 </div>
 
                 <div>
-                    <label class="block font-semibold text-cyan-400 mb-2 text-[11px]">PILIH DURASI / PAKET</label>
+                    <label class="block font-semibold text-cyan-400 mb-2 text-[11px]">PILIH DURASI / PAKET (6 PILIHAN)</label>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         <template x-for="item in activeProduct?.items" :key="item.id">
                             <div @click="selectedItem = item" :class="selectedItem?.id === item.id ? 'border-indigo-500 bg-indigo-600/20' : 'border-slate-800 bg-dark'" class="border rounded-xl p-2.5 cursor-pointer transition flex flex-col justify-between">
                                 <span class="text-[11px] font-bold text-white truncate" x-text="item.name"></span>
+                                <span class="text-[9px] text-slate-400 block mt-0.5" x-text="item.desc"></span>
                                 <span class="text-[11px] font-black text-emerald-400 mt-2" x-text="formatRupiah(item.price)"></span>
                             </div>
                         </template>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1.5 text-[11px]">METODE PEMBAYARAN</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div @click="if(isLoggedIn) { paymentMethod = 'saldo'; } else { alert('Silakan masuk terlebih dahulu.'); showAuthModal = true; showDetailModal = false; }" :class="paymentMethod === 'saldo' ? 'border-indigo-500 bg-indigo-600/20' : 'border-slate-800 bg-dark'" class="border rounded-xl p-2.5 cursor-pointer transition flex items-center justify-between">
+                            <div>
+                                <p class="text-[11px] font-bold text-white">Saldo Akun</p>
+                                <p class="text-[9px] text-emerald-400" x-text="isLoggedIn ? formatRupiah(userBalance) : 'Login Dulu'"></p>
+                            </div>
+                            <span class="bg-emerald-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded">Instan</span>
+                        </div>
+                        <div @click="paymentMethod = 'qris'" :class="paymentMethod === 'qris' ? 'border-indigo-500 bg-indigo-600/20' : 'border-slate-800 bg-dark'" class="border rounded-xl p-2.5 cursor-pointer transition flex items-center justify-between">
+                            <div>
+                                <p class="text-[11px] font-bold text-white">QRIS Instant</p>
+                                <p class="text-[9px] text-slate-400">All E-Wallet</p>
+                            </div>
+                            <span class="bg-indigo-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded">Otomatis</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -443,10 +467,30 @@
                     }
                 },
 
-                openProductDetail(p) { this.activeProduct = p; this.selectedItem = p.items?.[0] || null; this.userId = ''; this.showDetailModal = true; },
+                openProductDetail(p) { this.activeProduct = p; this.selectedItem = p.items?.[0] || null; this.userId = ''; this.paymentMethod = 'qris'; this.showDetailModal = true; },
                 openTopupSaldoModal() { if (!this.isLoggedIn) { alert('Login dulu'); this.showAuthModal = true; return; } this.showTopupSaldoModal = true; },
                 processTopupSaldo() { this.showTopupSaldoModal = false; this.showQrisModal = true; },
-                processCheckout() { if (!this.userId) { alert('Masukkan email'); return; } this.showDetailModal = false; this.showQrisModal = true; },
+                
+                processCheckout() { 
+                    if (!this.userId) { alert('Masukkan email tujuan!'); return; } 
+                    if (!this.selectedItem) { alert('Pilih paket produk!'); return; }
+
+                    if (this.paymentMethod === 'saldo') {
+                        if (this.userBalance < this.selectedItem.price) {
+                            alert('Saldo Anda tidak mencukupi!');
+                            return;
+                        }
+                        this.userBalance -= this.selectedItem.price;
+                        localStorage.setItem('kiosonline_user_balance_' + this.loggedInUser.email, this.userBalance);
+                        this.showDetailModal = false;
+                        alert('Pembelian Berhasil menggunakan Saldo!');
+                        return;
+                    }
+
+                    this.showDetailModal = false; 
+                    this.showQrisModal = true; 
+                },
+                
                 handleCheckPayment() { this.paymentStatus = 'belum_masuk'; },
 
                 categories: [
@@ -465,12 +509,114 @@
                     return r;
                 },
                 products: [
-                    { id: 'chatgpt', category: 'ai', name: 'ChatGPT Plus / Pro', publisher: 'OpenAI', image: 'https://i.ibb.co.com/svDqB5bV/b5f6c51118a9f7bc97edd88038051a49.jpg', tutorial: 'Kredensial dikirim otomatis ke email.', items: [{ id: 'cg_1', name: '1 Bulan', price: 100000 }, { id: 'cg_2', name: '1 Tahun', price: 1050000 }] },
-                    { id: 'claude', category: 'ai', name: 'Claude AI Pro', publisher: 'Anthropic', image: 'https://i.ibb.co.com/yFgwQz2n/download.png', tutorial: 'Panduan login dikirim via email.', items: [{ id: 'cld_1', name: '1 Bulan', price: 90000 }, { id: 'cld_2', name: '1 Tahun', price: 945000 }] },
-                    { id: 'capcut', category: 'design', name: 'CapCut Pro', publisher: 'ByteDance', image: 'https://i.ibb.co.com/7t1160z/images-1.png', tutorial: 'Akses akun CapCut Pro dikirim otomatis via email.', items: [{ id: 'cc_1', name: '1 Bulan', price: 15000 }, { id: 'cc_2', name: '1 Tahun', price: 120000 }] },
-                    { id: 'disney', category: 'streaming', name: 'Disney+ Hotstar', publisher: 'Disney', image: 'https://i.ibb.co.com/9kF148p9/images-2.png', tutorial: 'Akun streaming Disney+ dikirim via email.', items: [{ id: 'dns_1', name: '1 Bulan', price: 25000 }, { id: 'dns_2', name: '1 Tahun', price: 195000 }] },
-                    { id: 'canva', category: 'design', name: 'Canva Pro', publisher: 'Canva', image: 'https://i.ibb.co.com/Q7q6qHXH/b224bcfb58a1861dee8afc847a5d657d.jpg', tutorial: 'Invite link dikirim via email.', items: [{ id: 'cnv_1', name: '1 Bulan', price: 13000 }, { id: 'cnv_2', name: '1 Tahun', price: 265000 }] },
-                    { id: 'youtube', category: 'streaming', name: 'YouTube Premium', publisher: 'Google', image: 'https://i.ibb.co.com/x8PH23Kb/fd8fa3af939c8bb19fe20d3b6502b792.jpg', tutorial: 'Invite family plan dikirim via email.', items: [{ id: 'yt_1', name: '1 Bulan', price: 10000 }, { id: 'yt_2', name: '1 Tahun', price: 235000 }] }
+                    { 
+                        id: 'chatgpt', category: 'ai', name: 'ChatGPT Plus / Pro', publisher: 'OpenAI', image: 'https://i.ibb.co.com/svDqB5bV/b5f6c51118a9f7bc97edd88038051a49.jpg', 
+                        tutorial: 'Kredensial dikirim otomatis ke email.', 
+                        items: [
+                            { id: 'cg_1', name: '1 Bulan', desc: 'Resmi', price: 100000 },
+                            { id: 'cg_2', name: '2 Bulan', desc: 'Resmi', price: 195000 },
+                            { id: 'cg_3', name: '3 Bulan', desc: 'Resmi', price: 285000 },
+                            { id: 'cg_4', name: '6 Bulan', desc: 'Resmi', price: 550000 },
+                            { id: 'cg_5', name: '9 Bulan', desc: 'Resmi', price: 810000 },
+                            { id: 'cg_6', name: '1 Tahun', desc: 'Resmi', price: 1050000 }
+                        ] 
+                    },
+                    { 
+                        id: 'claude', category: 'ai', name: 'Claude AI Pro', publisher: 'Anthropic', image: 'https://i.ibb.co.com/yFgwQz2n/download.png', 
+                        tutorial: 'Panduan login dikirim via email.', 
+                        items: [
+                            { id: 'cld_1', name: '1 Bulan', desc: 'Resmi', price: 90000 },
+                            { id: 'cld_2', name: '2 Bulan', desc: 'Resmi', price: 175000 },
+                            { id: 'cld_3', name: '3 Bulan', desc: 'Resmi', price: 255000 },
+                            { id: 'cld_4', name: '6 Bulan', desc: 'Resmi', price: 495000 },
+                            { id: 'cld_5', name: '9 Bulan', desc: 'Resmi', price: 720000 },
+                            { id: 'cld_6', name: '1 Tahun', desc: 'Resmi', price: 945000 }
+                        ] 
+                    },
+                    { 
+                        id: 'museai', category: 'ai', name: 'Muse AI Pro', publisher: 'Muse AI', image: 'https://i.ibb.co.com/qYVQhDgK/Muse-AI-Logo.png', 
+                        tutorial: 'Akses akun Muse AI dikirim via email.', 
+                        items: [
+                            { id: 'muse_1', name: '25M Token', desc: 'Token', price: 110000 },
+                            { id: 'muse_2', name: '55M Token', desc: 'Token', price: 218000 },
+                            { id: 'muse_3', name: '105M Token', desc: 'Token', price: 325000 },
+                            { id: 'muse_4', name: '220M Token', desc: 'Token', price: 433000 },
+                            { id: 'muse_5', name: '450M Token', desc: 'Token', price: 541000 },
+                            { id: 'muse_6', name: '1T Token', desc: 'Token', price: 1050000 }
+                        ] 
+                    },
+                    { 
+                        id: 'gemini', category: 'ai', name: 'Gemini Pro', publisher: 'Google', image: 'https://i.ibb.co.com/CKCxHM4v/2c4e2d188f5df936d954b9228a90d1f3.jpg', 
+                        tutorial: 'Akses akun Gemini Pro dikirim via email.', 
+                        items: [
+                            { id: 'gem_1', name: '1 Bulan', desc: 'Resmi', price: 32000 },
+                            { id: 'gem_2', name: '2 Bulan', desc: 'Resmi', price: 63000 },
+                            { id: 'gem_3', name: '3 Bulan', desc: 'Resmi', price: 92000 },
+                            { id: 'gem_4', name: '6 Bulan', desc: 'Resmi', price: 180000 },
+                            { id: 'gem_5', name: '9 Bulan', desc: 'Resmi', price: 265000 },
+                            { id: 'gem_6', name: '1 Tahun', desc: 'Resmi', price: 345000 }
+                        ] 
+                    },
+                    { 
+                        id: 'grok', category: 'ai', name: 'Grok AI Premium', publisher: 'xAI / X', image: 'https://i.ibb.co.com/xSSpvr8t/images.png', 
+                        tutorial: 'Akses akun Grok AI dikirim via email.', 
+                        items: [
+                            { id: 'grk_1', name: '1 Bulan', desc: 'Resmi', price: 68000 },
+                            { id: 'grk_2', name: '2 Bulan', desc: 'Resmi', price: 135000 },
+                            { id: 'grk_3', name: '3 Bulan', desc: 'Resmi', price: 195000 },
+                            { id: 'grk_4', name: '6 Bulan', desc: 'Resmi', price: 380000 },
+                            { id: 'grk_5', name: '9 Bulan', desc: 'Resmi', price: 560000 },
+                            { id: 'grk_6', name: '1 Tahun', desc: 'Resmi', price: 735000 }
+                        ] 
+                    },
+                    { 
+                        id: 'canva', category: 'design', name: 'Canva Pro', publisher: 'Canva', image: 'https://i.ibb.co.com/Q7q6qHXH/b224bcfb58a1861dee8afc847a5d657d.jpg', 
+                        tutorial: 'Invite link dikirim via email.', 
+                        items: [
+                            { id: 'cnv_1', name: '1 Bulan', desc: 'Resmi', price: 13000 },
+                            { id: 'cnv_2', name: '2 Bulan', desc: 'Resmi', price: 25000 },
+                            { id: 'cnv_3', name: '3 Bulan', desc: 'Resmi', price: 37000 },
+                            { id: 'cnv_4', name: '6 Bulan', desc: 'Resmi', price: 72000 },
+                            { id: 'cnv_5', name: '9 Bulan', desc: 'Resmi', price: 105000 },
+                            { id: 'cnv_6', name: '1 Tahun', desc: 'Resmi', price: 265000 }
+                        ] 
+                    },
+                    { 
+                        id: 'youtube', category: 'streaming', name: 'YouTube Premium', publisher: 'Google', image: 'https://i.ibb.co.com/x8PH23Kb/fd8fa3af939c8bb19fe20d3b6502b792.jpg', 
+                        tutorial: 'Invite family plan dikirim via email.', 
+                        items: [
+                            { id: 'yt_1', name: '1 Bulan', desc: 'Resmi', price: 10000 },
+                            { id: 'yt_2', name: '2 Bulan', desc: 'Resmi', price: 19000 },
+                            { id: 'yt_3', name: '3 Bulan', desc: 'Resmi', price: 28000 },
+                            { id: 'yt_4', name: '6 Bulan', desc: 'Resmi', price: 55000 },
+                            { id: 'yt_5', name: '9 Bulan', desc: 'Resmi', price: 80000 },
+                            { id: 'yt_6', name: '1 Tahun', desc: 'Resmi', price: 235000 }
+                        ] 
+                    },
+                    { 
+                        id: 'netflix', category: 'streaming', name: 'Netflix Premium', publisher: 'Netflix', image: 'https://i.ibb.co.com/XfvYT0YX/3eabff4249d30fbdd9320c1203355a42.jpg', 
+                        tutorial: 'Profil Netflix dikirim via WhatsApp/Email.', 
+                        items: [
+                            { id: 'net_1', name: '1 Bulan', desc: 'Resmi', price: 21000 },
+                            { id: 'net_2', name: '2 Bulan', desc: 'Resmi', price: 42000 },
+                            { id: 'net_3', name: '3 Bulan', desc: 'Resmi', price: 62000 },
+                            { id: 'net_4', name: '6 Bulan', desc: 'Resmi', price: 120000 },
+                            { id: 'net_5', name: '9 Bulan', desc: 'Resmi', price: 178000 },
+                            { id: 'net_6', name: '1 Tahun', desc: 'Resmi', price: 235000 }
+                        ] 
+                    },
+                    { 
+                        id: 'spotify', category: 'streaming', name: 'Spotify Premium', publisher: 'Spotify', image: 'https://i.ibb.co.com/8gqsj1G7/9b1857defd4e25ce19cfb390b9c9fdba.jpg', 
+                        tutorial: 'Link aktivasi dikirim via email.', 
+                        items: [
+                            { id: 'spt_1', name: '1 Bulan', desc: 'Resmi', price: 20000 },
+                            { id: 'spt_2', name: '2 Bulan', desc: 'Resmi', price: 40000 },
+                            { id: 'spt_3', name: '3 Bulan', desc: 'Resmi', price: 58000 },
+                            { id: 'spt_4', name: '6 Bulan', desc: 'Resmi', price: 112000 },
+                            { id: 'spt_5', name: '9 Bulan', desc: 'Resmi', price: 165000 },
+                            { id: 'spt_6', name: '1 Tahun', desc: 'Resmi', price: 235000 }
+                        ] 
+                    }
                 ]
             }
         }
