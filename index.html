@@ -344,7 +344,6 @@
 
     <!-- SCRIPT APLIKASI -->
     <script>
-        // URL Google Sheets Web App Terbaru
         const SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbylei50vv5gmjYRGXrl0hotQ4DMVx8apUqjARuiZ8QQhvT_2JvFXe09cKFJcxKo3wnz2Q/exec';
 
         function kiosOnlineApp() {
@@ -356,24 +355,37 @@
                 userBalance: 0, isLoggedIn: false, loggedInUser: { username: '', email: '' },
                 loginEmail: '', loginPassword: '', registerUsername: '', registerEmail: '', registerPassword: '',
 
-                init() {
+                async init() {
                     const activeSession = localStorage.getItem('kiosonline_active_session');
                     if (activeSession) {
                         try {
                             this.loggedInUser = JSON.parse(activeSession);
                             this.isLoggedIn = true;
-                            let storedBalance = localStorage.getItem('kiosonline_user_balance_' + this.loggedInUser.email) || 0;
-                            this.userBalance = parseInt(storedBalance);
+                            await this.fetchLatestBalance(this.loggedInUser.email);
                         } catch (e) { this.isLoggedIn = false; }
                     }
                 },
+
+                async fetchLatestBalance(email) {
+                    try {
+                        const response = await fetch(SHEET_WEB_APP_URL + '?email=' + encodeURIComponent(email));
+                        const data = await response.json();
+                        if (data && data.balance !== undefined) {
+                            this.userBalance = parseInt(data.balance);
+                            localStorage.setItem('kiosonline_user_balance_' + email, this.userBalance);
+                        }
+                    } catch (err) {
+                        let storedBalance = localStorage.getItem('kiosonline_user_balance_' + email) || 0;
+                        this.userBalance = parseInt(storedBalance);
+                    }
+                },
+
                 triggerLoading() { this.isLoading = true; setTimeout(() => { this.isLoading = false; }, 300); },
                 formatRupiah(v) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(v); },
                 
                 async handleRegister() {
                     if (!this.registerUsername || !this.registerEmail || !this.registerPassword) { alert('Lengkapi data!'); return; }
                     
-                    // Kirim data pendaftaran ke Google Sheets menggunakan format text/plain agar tidak terhalang CORS
                     try {
                         await fetch(SHEET_WEB_APP_URL, {
                             method: 'POST',
@@ -381,6 +393,7 @@
                             body: JSON.stringify({
                                 username: this.registerUsername,
                                 email: this.registerEmail,
+                                password: this.registerPassword,
                                 balance: 0
                             })
                         });
@@ -396,14 +409,32 @@
                     this.showAuthModal = false;
                 },
 
-                handleLogin() {
+                async handleLogin() {
                     if (!this.loginEmail || !this.loginPassword) { alert('Masukkan email & password!'); return; }
+                    
+                    // Ambil data terbaru dari server saat login untuk validasi password & saldo
+                    try {
+                        const response = await fetch(SHEET_WEB_APP_URL + '?email=' + encodeURIComponent(this.loginEmail));
+                        const data = await response.json();
+                        
+                        if (data && data.password && data.password !== this.loginPassword) {
+                            alert('Password salah!');
+                            return;
+                        }
+                        
+                        if (data && data.balance !== undefined) {
+                            this.userBalance = parseInt(data.balance);
+                        }
+                    } catch (err) {
+                        console.error('Gagal verifikasi login ke server:', err);
+                    }
+
                     const loggedAcc = { username: this.loginEmail.split('@')[0], email: this.loginEmail };
-                    this.loggedInUser = loggedAcc; this.isLoggedIn = true;
-                    let storedBalance = localStorage.getItem('kiosonline_user_balance_' + this.loginEmail) || 0;
-                    this.userBalance = parseInt(storedBalance);
+                    this.loggedInUser = loggedAcc; 
+                    this.isLoggedIn = true;
                     localStorage.setItem('kiosonline_active_session', JSON.stringify(loggedAcc));
-                    alert('Berhasil Masuk!'); this.showAuthModal = false;
+                    alert('Berhasil Masuk!'); 
+                    this.showAuthModal = false;
                 },
 
                 handleLogout() {
